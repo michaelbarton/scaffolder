@@ -1,4 +1,4 @@
-class Scaffolder
+class Scaffolder::Base
   class Sequence
 
     attr_accessor :entry_type, :start, :end, :name

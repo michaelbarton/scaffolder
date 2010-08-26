@@ -2,6 +2,17 @@
 
 Description goes here.
 
+== Base
+
+  * Inserts processed are processed in reverse order according to end position. Last insert added up until first insert, preserves insert coordinates.
+  * Overlapping inserts may cause unexpected behaviour
+  * Sequence reversed (if specified) after inserts have been added.
+
+== Validate
+
+  * Detects overlapping inserts
+  * Detects inserts which don't map to the inserted region for a given percentage identity
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
@@ -15,11 +26,3 @@ Description goes here.
 == Copyright
 
 Copyright (c) 2010 Michael Barton. See LICENSE for details.
-
-== Notes
-
-Inserts processed are processed in reverse order according to end position. Last insert added up until first insert. Done to preserve insert coordinates.
-
-Overlapping inserts may cause unexpected behaviour
-
-Sequence reversed after inserts have been added.

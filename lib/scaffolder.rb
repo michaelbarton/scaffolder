@@ -2,9 +2,7 @@ require 'delegate'
 require 'bio'
 
 class Scaffolder
-  autoload :Region,   'scaffolder/region'
-  autoload :Insert,   'scaffolder/insert'
-  autoload :Sequence, 'scaffolder/sequence'
+  autoload :Base, 'scaffolder/base'
 
   attr_reader :layout
 
@@ -18,9 +16,9 @@ class Scaffolder
 
       case type
       when 'unresolved'
-        Scaffolder::Region.new(:unresolved,'N'*data['length'])
+        Scaffolder::Base::Region.new(:unresolved,'N'*data['length'])
       when 'sequence'
-        sequence = Scaffolder::Sequence.new(
+        sequence = Scaffolder::Base::Sequence.new(
           :name     => data['source'],
           :start    => data['start'],
           :end      => data['end'],
@@ -29,7 +27,7 @@ class Scaffolder
         )
         if data['inserts']
           sequence.add_inserts(data['inserts'].map do |insert|
-            Scaffolder::Insert.new(
+            Scaffolder::Base::Insert.new(
               :start    => insert['start'],
               :stop     => insert['stop'],
               :sequence => fetch_sequence(insert['source'])

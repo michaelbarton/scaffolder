@@ -13,21 +13,21 @@ class TestScaffolder < Test::Unit::TestCase
     context "when parsing a sequence tag" do
 
       should "create sequence" do
-        mock(Scaffolder::Sequence).new(@expect)
+        mock(Scaffolder::Base::Sequence).new(@expect)
         scaffold = Scaffolder.new @assembly, @sequence
         assert(scaffold.layout.length, 1)
       end
 
       should "create sequence with coordinates" do
         @assembly.first['sequence'].update('start' => 2, 'end' => 5)
-        mock(Scaffolder::Sequence).new(@expect.update({:start => 2, :end => 5 }))
+        mock(Scaffolder::Base::Sequence).new(@expect.update({:start => 2, :end => 5 }))
         scaffold = Scaffolder.new @assembly, @sequence
         assert(scaffold.layout.length, 1)
       end
 
       should "create sequence with reverse" do
         @assembly.first['sequence'].update('reverse' => true)
-        mock(Scaffolder::Sequence).new(@expect.update({:reverse => true }))
+        mock(Scaffolder::Base::Sequence).new(@expect.update({:reverse => true }))
         scaffold = Scaffolder.new @assembly, @sequence
         assert(scaffold.layout.length, 1)
       end
@@ -48,10 +48,10 @@ class TestScaffolder < Test::Unit::TestCase
 
       should "pass inserts to sequence object" do
         params = {:start => 5, :stop => 10, :sequence => 'GGTAGTA'}
-        insert = Scaffolder::Insert.new(params)
+        insert = Scaffolder::Base::Insert.new(params)
 
-        mock.instance_of(Scaffolder::Sequence).add_inserts([insert])
-        mock(Scaffolder::Insert).new(params){insert}
+        mock.instance_of(Scaffolder::Base::Sequence).add_inserts([insert])
+        mock(Scaffolder::Base::Insert).new(params){insert}
 
         scaffold = Scaffolder.new @assembly, @sequence
         assert(scaffold.layout.length, 1)
@@ -70,7 +70,7 @@ class TestScaffolder < Test::Unit::TestCase
       setup{ @assembly = [ {"unresolved" => { "length" => 5 } } ] }
 
       should 'create an unresolved region' do
-        mock(Scaffolder::Region).new(:unresolved,'N'*5)
+        mock(Scaffolder::Base::Region).new(:unresolved,'N'*5)
         scaffold = Scaffolder.new @assembly, @sequence
         assert(scaffold.layout.length, 1)
       end
