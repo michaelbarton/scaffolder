@@ -1,4 +1,4 @@
-class Scaffolder
+class Scaffolder::Base
   class Insert
     include Comparable
 

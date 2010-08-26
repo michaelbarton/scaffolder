@@ -2,9 +2,7 @@ require 'delegate'
 require 'bio'
 
 class Scaffolder < DelegateClass(Array)
-  autoload :Region,   'scaffolder/region'
-  autoload :Insert,   'scaffolder/insert'
-  autoload :Sequence, 'scaffolder/sequence'
+  autoload :Base, 'scaffolder/base'
 
   def initialize(assembly,sequence)
     @sequences = Hash[ *Bio::FlatFile::auto(sequence).collect { |s|
@@ -16,9 +14,9 @@ class Scaffolder < DelegateClass(Array)
 
       case type
       when 'unresolved'
-        Scaffolder::Region.new(:unresolved,'N'*data['length'])
+        Scaffolder::Base::Region.new(:unresolved,'N'*data['length'])
       when 'sequence'
-        sequence = Scaffolder::Sequence.new(
+        sequence = Scaffolder::Base::Sequence.new(
           :name     => data['source'],
           :start    => data['start'],
           :end      => data['end'],
@@ -27,7 +25,7 @@ class Scaffolder < DelegateClass(Array)
         )
         if data['inserts']
           sequence.add_inserts(data['inserts'].map do |insert|
-            Scaffolder::Insert.new(
+            Scaffolder::Base::Insert.new(
               :start    => insert['start'],
               :stop     => insert['stop'],
               :sequence => fetch_sequence(insert['source'])
