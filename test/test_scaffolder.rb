@@ -14,19 +14,22 @@ class TestScaffolder < Test::Unit::TestCase
 
       should "create sequence" do
         mock(Scaffolder::Sequence).new(@expect)
-        Scaffolder.new @assembly, @sequence
+        scaffold = Scaffolder.new @assembly, @sequence
+        assert(scaffold.layout.length, 1)
       end
 
       should "create sequence with coordinates" do
         @assembly.first['sequence'].update('start' => 2, 'end' => 5)
         mock(Scaffolder::Sequence).new(@expect.update({:start => 2, :end => 5 }))
-        Scaffolder.new @assembly, @sequence
+        scaffold = Scaffolder.new @assembly, @sequence
+        assert(scaffold.layout.length, 1)
       end
 
       should "create sequence with reverse" do
         @assembly.first['sequence'].update('reverse' => true)
         mock(Scaffolder::Sequence).new(@expect.update({:reverse => true }))
-        Scaffolder.new @assembly, @sequence
+        scaffold = Scaffolder.new @assembly, @sequence
+        assert(scaffold.layout.length, 1)
       end
 
       should "throw an error when source doesn't have a matching sequence" do
@@ -50,7 +53,8 @@ class TestScaffolder < Test::Unit::TestCase
         mock.instance_of(Scaffolder::Sequence).add_inserts([insert])
         mock(Scaffolder::Insert).new(params){insert}
 
-        Scaffolder.new @assembly, @sequence
+        scaffold = Scaffolder.new @assembly, @sequence
+        assert(scaffold.layout.length, 1)
       end
 
       should "throw and error when insert does not have a matching sequence" do
@@ -67,7 +71,8 @@ class TestScaffolder < Test::Unit::TestCase
 
       should 'create an unresolved region' do
         mock(Scaffolder::Region).new(:unresolved,'N'*5)
-        Scaffolder.new @assembly, @sequence
+        scaffold = Scaffolder.new @assembly, @sequence
+        assert(scaffold.layout.length, 1)
       end
 
     end

@@ -1,17 +1,19 @@
 require 'delegate'
 require 'bio'
 
-class Scaffolder < DelegateClass(Array)
+class Scaffolder
   autoload :Region,   'scaffolder/region'
   autoload :Insert,   'scaffolder/insert'
   autoload :Sequence, 'scaffolder/sequence'
+
+  attr_reader :layout
 
   def initialize(assembly,sequence)
     @sequences = Hash[ *Bio::FlatFile::auto(sequence).collect { |s|
       [s.definition.split.first,s.seq]
     }.flatten]
 
-    super(assembly.map do |entry|
+    @layout = assembly.map do |entry|
       type, data = entry.keys.first, entry.values.first
 
       case type
@@ -38,7 +40,7 @@ class Scaffolder < DelegateClass(Array)
       else
         raise ArgumentError.new("Unknown tag: #{type}")
       end
-    end)
+    end
   end
 
   def fetch_sequence(name)
