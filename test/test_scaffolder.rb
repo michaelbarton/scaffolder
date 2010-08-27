@@ -5,9 +5,9 @@ class TestScaffolder < Test::Unit::TestCase
     
     setup do
       @sequence = File.join(File.dirname(__FILE__),'data','sequences.fna')
-        @assembly = [ {"sequence" => { "source" => "sequence1" } } ]
-        @expect = {:name => 'sequence1', :start => nil, :end => nil,
-          :sequence => 'ATGCCAGATAACTGACTAGCATG', :reverse => nil}
+      @assembly = [ {"sequence" => { "source" => "sequence1" } } ]
+      @expect = {:name => 'sequence1', :start => nil, :end => nil,
+        :sequence => 'ATGCCAGATAACTGACTAGCATG', :reverse => nil}
     end
 
     context "when parsing a sequence tag" do
@@ -15,21 +15,21 @@ class TestScaffolder < Test::Unit::TestCase
       should "create sequence" do
         mock(Scaffolder::Base::Sequence).new(@expect)
         scaffold = Scaffolder.new @assembly, @sequence
-        assert(scaffold.layout.length, 1)
+        assert_equal(scaffold.layout.length, 1)
       end
 
       should "create sequence with coordinates" do
         @assembly.first['sequence'].update('start' => 2, 'end' => 5)
         mock(Scaffolder::Base::Sequence).new(@expect.update({:start => 2, :end => 5 }))
         scaffold = Scaffolder.new @assembly, @sequence
-        assert(scaffold.layout.length, 1)
+        assert_equal(scaffold.layout.length, 1)
       end
 
       should "create sequence with reverse" do
         @assembly.first['sequence'].update('reverse' => true)
         mock(Scaffolder::Base::Sequence).new(@expect.update({:reverse => true }))
         scaffold = Scaffolder.new @assembly, @sequence
-        assert(scaffold.layout.length, 1)
+        assert_equal(scaffold.layout.length, 1)
       end
 
       should "throw an error when source doesn't have a matching sequence" do
@@ -54,7 +54,7 @@ class TestScaffolder < Test::Unit::TestCase
         mock(Scaffolder::Base::Insert).new(params){insert}
 
         scaffold = Scaffolder.new @assembly, @sequence
-        assert(scaffold.layout.length, 1)
+        assert_equal(scaffold.layout.length, 1)
       end
 
       should "throw and error when insert does not have a matching sequence" do
@@ -72,7 +72,7 @@ class TestScaffolder < Test::Unit::TestCase
       should 'create an unresolved region' do
         mock(Scaffolder::Base::Region).new(:unresolved,'N'*5)
         scaffold = Scaffolder.new @assembly, @sequence
-        assert(scaffold.layout.length, 1)
+        assert_equal(scaffold.layout.length, 1)
       end
 
     end
