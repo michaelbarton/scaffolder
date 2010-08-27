@@ -2,7 +2,8 @@ require 'delegate'
 require 'bio'
 
 class Scaffolder
-  autoload :Base, 'scaffolder/base'
+  autoload :Base,     'scaffolder/base'
+  autoload :Validate, 'scaffolder/validate'
 
   attr_reader :layout
 
@@ -40,6 +41,8 @@ class Scaffolder
       end
     end
   end
+
+  private
 
   def fetch_sequence(name)
     sequence = @sequences[name]
