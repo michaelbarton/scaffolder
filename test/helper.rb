@@ -1,3 +1,5 @@
+require 'ostruct'
+
 require 'rubygems'
 require 'test/unit'
 require 'shoulda'
@@ -12,4 +14,10 @@ require 'scaffolder'
 class Test::Unit::TestCase
   require 'tempfile'
   include RR::Adapters::TestUnit
+
+
+  def empty_scaffold
+    sequence = File.join(File.dirname(__FILE__),'data','sequences.fna')
+    Scaffolder.new([],sequence)
+  end
 end

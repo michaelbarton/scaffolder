@@ -1,9 +1,10 @@
 require 'delegate'
 require 'bio'
 
+require 'scaffolder/base'
+require 'scaffolder/validate'
+
 class Scaffolder
-  autoload :Base,     'scaffolder/base'
-  autoload :Validate, 'scaffolder/validate'
 
   attr_reader :layout
 

@@ -1,24 +1,38 @@
 require 'helper'
 
 class TestValidate < Test::Unit::TestCase
-  context Scaffolder::Validate do
+  context Scaffolder do
 
-    context "two overlapping inserts" do
-      should "not be a valid assembly"
-      should "be highlighted as overlapping inserts"
+    setup do
+      @valid   = OpenStruct.new(:entry_type => :sequence, :valid? => true)
+      @invalid = OpenStruct.new(:entry_type => :sequence, :valid? => false)
     end
 
-    context "two non overlapping inserts" do
-      should "be a valid assembly"
+    context "a scaffold with two valid sequences" do
+      setup do
+        @scaffold = empty_scaffold
+        mock(@scaffold).layout.returns([@valid,@valid])
+      end
+
+      should "be valid" do
+        assert_equal(@scaffold.valid?, true)
+      end
     end
 
-    context "an insert with a sequence identity below a threshold" do
-      should "not be a valid assembly"
-      should "be highlighted as a miss matching insert"
-    end
+    context "a scaffold with a mixture of valid and invalid sequences" do
+      setup do
+        @scaffold = empty_scaffold
+        mock(@scaffold).layout.returns([@valid,@invalid])
+      end
 
-    context "an insert with a sequence identity above a threshold" do
-      should "be a valid assembly"
+      should "not be valid" do
+        assert_equal(@scaffold.valid?, false)
+      end
+
+      should "return the erroneous sequence" do
+        assert_equal(@scaffold.errors,[@invalid])
+      end
+
     end
 
   end
