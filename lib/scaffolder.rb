@@ -2,7 +2,8 @@ require 'delegate'
 require 'bio'
 
 class Scaffolder < DelegateClass(Array)
-  autoload :Base, 'scaffolder/base'
+  autoload :Base,     'scaffolder/base'
+  autoload :Validate, 'scaffolder/validate'
 
   def initialize(assembly,sequence)
     @sequences = Hash[ *Bio::FlatFile::auto(sequence).collect { |s|
@@ -38,6 +39,8 @@ class Scaffolder < DelegateClass(Array)
       end
     end)
   end
+
+  private
 
   def fetch_sequence(name)
     sequence = @sequences[name]
