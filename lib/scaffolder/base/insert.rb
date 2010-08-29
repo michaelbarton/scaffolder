@@ -18,5 +18,9 @@ class Scaffolder::Base
       self.stop <=> other.stop
     end
 
+    def overlap?(other)
+      ! ((start..stop).to_a & (other.start..other.stop).to_a).empty?
+    end
+
   end
 end

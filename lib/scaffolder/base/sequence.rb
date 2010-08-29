@@ -18,7 +18,8 @@ class Scaffolder::Base
     end
 
     def add_inserts(inserts)
-      inserts.sort.reverse.each do |insert|
+      @inserts = inserts.sort.reverse
+      @inserts.each do |insert|
         if insert.start > @raw_sequence.length
           raise ArgumentError.new("Insert start greater than length")
         end

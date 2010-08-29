@@ -105,5 +105,42 @@ class TestScaffolder < Test::Unit::TestCase
       end
     end
 
+    context "validate sequence inserts for overlaps" do
+
+      setup do
+        @insert = {:start => 5, :stop => 10, :sequence => 'GGTAGTA'}
+        @sequence = Scaffolder::Base::Sequence.new @options
+      end
+
+      should "be valid when inserts don't overlap" do
+        @no_overlap = {:start => 12, :stop => 13, :sequence => 'GGTAGTA'}
+        @sequence.add_inserts([Scaffolder::Base::Insert.new(@insert),
+                               Scaffolder::Base::Insert.new(@no_overlap)])
+        assert_equal(@sequence.valid?,true)
+      end
+
+      should "return no error messages when inserts don't overlap" do
+        @no_overlap = {:start => 12, :stop => 13, :sequence => 'GGTAGTA'}
+        @sequence.add_inserts([Scaffolder::Base::Insert.new(@insert),
+                               Scaffolder::Base::Insert.new(@no_overlap)])
+        assert(@sequence.errors.empty?)
+      end
+
+      should "not be valid when inserts overlap" do
+        @overlap = {:start => 10, :stop => 11, :sequence => 'GGTAGTA'}
+        @sequence.add_inserts([Scaffolder::Base::Insert.new(@insert),
+                               Scaffolder::Base::Insert.new(@overlap)])
+        assert_equal(@sequence.valid?,false)
+      end
+
+      should "return an error message when inserts overlap" do
+        @overlap = {:start => 10, :stop => 11, :sequence => 'GGTAGTA'}
+        inserts = [Scaffolder::Base::Insert.new(@insert),
+                   Scaffolder::Base::Insert.new(@overlap)]
+        @sequence.add_inserts(inserts)
+        assert_equal(@sequence.errors,[inserts.sort])
+      end
+
+    end
   end
 end
