@@ -27,10 +27,12 @@ getting started with Scaffolder.
 
 == Contact
 
-Scaffolder was developed by Michael Barton (www.michaelbarton.me.uk). Pull
-requests, patches and bug reports are welcome. The source code is available on
-github[http://github.com/scaffolder/scaffolder]. Bug reports and feature
-requests may also be made there.
+Scaffolder was developed by Michael Barton (www.michaelbarton.me.uk). The
+website for scaffolder is at http://next.gs and a {twitter feed for
+updates}[http://twitter.com/nxtgs] is available. There is a {Google
+group}[http://groups.google.com/group/scaffolder] for questions and comments.
+The source code is available on github[http://github.com/scaffolder]. Bug
+reports and feature requests may also be made there.
 
 == Copyright
 
