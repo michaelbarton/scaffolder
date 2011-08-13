@@ -15,8 +15,12 @@ repeatability.
 
 == Installing
 
-Ruby and RubyGems are required to use scaffolder. Scaffolder is installed on
-the command line using:
+Ruby and RubyGems are required to use scaffolder. Scaffolder is compatible with
+at least Ruby versions 1.8.7 and 1.9.2. The {last stable version of the
+RubyGems package manager}[https://rubygems.org/pages/download] is recommended
+for installing scaffolder.
+
+Scaffolder is installed on the command line using:
 
   $ gem install scaffolder
 
