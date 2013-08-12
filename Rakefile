@@ -7,6 +7,7 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+
 require 'rake/dsl_definition'
 require 'rspec/core'
 require 'rspec/core/rake_task'
@@ -14,16 +15,13 @@ require 'cucumber/rake/task'
 
 Bundler::GemHelper.install_tasks
 
-Cucumber::Rake::Task.new(:features)
-
 require 'yard'
 YARD::Rake::YardocTask.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-task :default => :test
+Cucumber::Rake::Task.new(:features)
+
+task :default => :spec
