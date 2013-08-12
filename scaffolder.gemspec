@@ -1,9 +1,11 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path("../lib/scaffolder/version", __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'scaffolder/version'
 
 Gem::Specification.new do |s|
   s.name        = "scaffolder"
-  s.version     = VERSION
+  s.version     = Scaffolder::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Michael Barton"]
   s.email       = %q{mail@next.gs}
@@ -20,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "bio",     "~> 1.4.0"
 
   # Specs
-  s.add_development_dependency "shoulda", "~> 3.5.0"
   s.add_development_dependency "rspec",   "~> 2.14.0"
   s.add_development_dependency "mocha",   "~> 0.14.0"
   s.add_development_dependency "yard",    "~> 0.8.0"
