@@ -8,20 +8,16 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake/dsl_definition'
-require 'rake'
+require 'rspec/core'
+require 'rspec/core/rake_task'
+require 'cucumber/rake/task'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  gem.name = "scaffolder"
-  gem.homepage = "http://next.gs"
-  gem.license = "MIT"
-  gem.summary = %Q{Genome scaffolding for human beings.}
-  gem.description = %Q{Organise sequence contigs into genome scaffolds using simple human-readable YAML files.}
-  gem.email = "mail@next.gs"
-  gem.authors = ["Michael Barton"]
-  gem.test_files = Dir['test/**/*.rb']
-end
-Jeweler::RubygemsDotOrgTasks.new
+Bundler::GemHelper.install_tasks
+
+Cucumber::Rake::Task.new(:features)
+
+require 'yard'
+YARD::Rake::YardocTask.new
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -29,11 +25,5 @@ Rake::TestTask.new(:test) do |test|
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
 end
-
-require 'cucumber/rake/task'
-Cucumber::Rake::Task.new(:features)
-
-require 'yard'
-YARD::Rake::YardocTask.new
 
 task :default => :test
