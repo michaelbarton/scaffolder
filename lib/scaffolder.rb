@@ -1,4 +1,5 @@
-require 'delegate'
+require 'scaffolder/version'
+
 require 'bio'
 
 # == Quick start
@@ -148,7 +149,7 @@ require 'bio'
 # Inserts with overlapping *open* and *close* regions in the same sequence will
 # cause unexpected behaviour and should be avoided.
 #
-class Scaffolder < DelegateClass(Array)
+class Scaffolder
   require 'scaffolder/errors'
   require 'scaffolder/region'
 

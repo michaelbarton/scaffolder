@@ -7,33 +7,21 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+
 require 'rake/dsl_definition'
-require 'rake'
-
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  gem.name = "scaffolder"
-  gem.homepage = "http://next.gs"
-  gem.license = "MIT"
-  gem.summary = %Q{Genome scaffolding for human beings.}
-  gem.description = %Q{Organise sequence contigs into genome scaffolds using simple human-readable YAML files.}
-  gem.email = "mail@next.gs"
-  gem.authors = ["Michael Barton"]
-  gem.test_files = Dir['test/**/*.rb']
-end
-Jeweler::RubygemsDotOrgTasks.new
-
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-
+require 'rspec/core'
+require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
-Cucumber::Rake::Task.new(:features)
+
+Bundler::GemHelper.install_tasks
 
 require 'yard'
 YARD::Rake::YardocTask.new
 
-task :default => :test
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
+end
+
+Cucumber::Rake::Task.new(:features)
+
+task :default => :spec
